@@ -44,6 +44,7 @@ public class PrincipalActivity extends AppCompatActivity {
     private TextView tvSemestre;
     private RecyclerView rvModulos;
 
+
     private AdapterPrincipal adapterPrincipal;
     private ArrayList<Modulos> modulos = new ArrayList<>();
     private ArrayList<Docentes> docentes = new ArrayList<>();
@@ -89,10 +90,11 @@ public class PrincipalActivity extends AppCompatActivity {
             }
         });
 
+        SetSemestre();
         ObtenerInformacion();
     }
 
-    private void ObtenerSemestre() {
+    private void SetSemestre() {
         tvSemestre = findViewById(R.id.tvSemestre);
         runOnUiThread(new Runnable() {
             @Override
@@ -106,27 +108,24 @@ public class PrincipalActivity extends AppCompatActivity {
 
     private void ObtenerInformacion(){
 
-        ObtenerSemestre();
         adapterPrincipal = new AdapterPrincipal();
 
         PrincipalViewModel viewModel = ViewModelProviders.of(this).get(PrincipalViewModel.class);
-        viewModel.EnviarPeticion(id_posgrado,semestre,id_usuario);
+        viewModel.EnviarPeticion(id_posgrado, semestre, id_usuario);
 
         if(viewModel.getInformacion()!=null){
             viewModel.getInformacion().observe(this, informacion -> {
-                String nombreposgrado = informacion.getPosgrados().getNombre();
-                tvEspecializacion.setText(nombreposgrado);
+                tvEspecializacion.setText(informacion.getPosgrados().getNombre());
                 modulos = informacion.getModulos();
                 docentes = informacion.getDocente();
                 calificaciones = informacion.getCalificaciones();
                 horarios = informacion.getHorario();
                 adapterPrincipal.setInfo(modulos,docentes,calificaciones);
+                LlenarLista();
             });
         }else{
             Toaster.toast(R.string.EstadoServidor);
         }
-
-        LlenarLista();
     }
 
     private void LlenarLista() {
@@ -165,6 +164,7 @@ public class PrincipalActivity extends AppCompatActivity {
     private void CargarSemestre(int semestre){
         this.semestre = semestre;
         LimpiarLista();
+        SetSemestre();
         ObtenerInformacion();
     }
 
