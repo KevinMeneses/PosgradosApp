@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+<!--
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/tvHmodulos"
+        android:textSize="18sp"
+        android:textColor="@color/blanco"
+        android:layout_marginTop="@dimen/lista_horarios"
+        android:layout_marginRight="@dimen/lista_horarios"
+        android:layout_marginLeft="@dimen/lista_horarios"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/tvDiahora"
+        android:textSize="18sp"
+        android:textColor="@color/blanco"
+        android:layout_marginRight="@dimen/lista_horarios"
+        android:layout_marginLeft="@dimen/lista_horarios"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/tvSedesalon"
+        android:textSize="18sp"
+        android:textColor="@color/blanco"
+        android:layout_marginRight="@dimen/lista_horarios"
+        android:layout_marginLeft="@dimen/lista_horarios"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/tvDireccion"
+        android:textSize="18sp"
+        android:textColor="@color/blanco"
+        android:layout_marginRight="@dimen/lista_horarios"
+        android:layout_marginLeft="@dimen/lista_horarios"
+        android:layout_marginBottom="@dimen/lista_horarios"/>
+
+        -->
+
+</LinearLayout>

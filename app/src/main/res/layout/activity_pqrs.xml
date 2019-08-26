@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="co.edu.uniautonoma.posgradosapp.Actividades.PqrsActivity"
+    android:background="@drawable/fondo_internas_solo_texto"
+    android:padding="50dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/amarillo"
+        android:text="@string/tvComentarios"
+        android:textSize="25sp"
+        android:textAlignment="center"
+        android:layout_marginBottom="30dp"
+        android:fontFamily="@font/robotomedium"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:background="@color/blanco"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/etComentario"/>
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="@string/btEnviar"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/blanco"
+        android:theme="@style/RaisedButton"
+        android:fontFamily="@font/opensansbold"
+        android:id="@+id/btEnviar"/>
+
+</LinearLayout>

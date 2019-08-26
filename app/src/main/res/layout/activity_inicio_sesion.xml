@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Actividades.InicioSesionActivity"
+    android:background="@drawable/fondoiniciosesion"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="0.4">
+
+        <ImageView
+            android:layout_width="170dp"
+            android:layout_height="140dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/logo_u"
+            android:layout_marginTop="40dp"
+            android:id="@+id/ivLogo"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pagina"
+            android:textColor="@color/blanco"
+            android:layout_gravity="center"
+            android:labelFor="@id/ivLogo"
+            android:id="@+id/tvEnlace"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="0.28">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tvEstudiante"
+            android:textColor="@color/blanco"
+            android:layout_above="@+id/btLogin"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="@string/btLogin2"
+            android:layout_centerInParent="true"
+            android:textColor="@color/blanco"
+            android:theme="@style/RaisedButton"
+            android:fontFamily="@font/opensansbold"
+            android:textSize="12sp"
+            android:id="@+id/btLogin"/>
+
+    </RelativeLayout>
+
+    <!--<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="0.18">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:padding="6dp">
+
+            <ImageView
+                android:layout_width="29dp"
+                android:layout_height="29dp"
+                android:src="@drawable/icono_perfil"/>
+
+            <EditText
+                android:layout_width="175dp"
+                android:layout_height="29dp"
+                android:hint="@string/etUsuario"
+                android:textSize="14sp"
+                android:padding="5dp"
+                android:background="@color/blanco"
+                android:id="@+id/etUsuario"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:padding="3dp"
+            android:layout_marginBottom="0dp">
+
+            <ImageView
+                android:layout_width="29dp"
+                android:layout_height="29dp"
+                android:src="@drawable/icono_candado"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="175dp"
+                android:layout_height="29dp"
+                app:passwordToggleEnabled="true"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="175dp"
+                    android:layout_height="29dp"
+                    android:hint="@string/etContrasena"
+                    android:inputType="textPassword"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:background="@color/blanco"
+                    android:id="@+id/etContrasena"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:layout_marginTop="5dp">
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:scaleX="0.8"
+                android:scaleY="0.7"
+                android:paddingRight="-2dp"
+                android:paddingBottom="-5dp"
+                android:buttonTint="@color/amarillo"
+                android:id="@+id/cbRecuerdame"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/recuerdame"
+                android:textColor="@color/blanco"
+                android:textSize="12sp"
+                android:layout_marginRight="18dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blanco"
+                android:text="@string/olvidaste"
+                android:textSize="12sp"
+                android:id="@+id/tvOlvidaste"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1">
+
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="39dp"
+            android:text="@string/btLogin"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="3dp"
+            android:textColor="@color/blanco"
+            android:theme="@style/RaisedButton"
+            android:fontFamily="@font/opensansbold"
+            android:textSize="12sp"
+            android:id="@+id/btLogin"/>
+
+    </RelativeLayout>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="0.15">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="35dp"
+            android:layout_marginBottom="4dp"
+            android:id="@+id/lyEscuela">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/casita"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/laescuela"
+                android:textSize="15sp"
+                android:textColor="@color/blanco"
+                android:padding="2dp"
+                android:paddingStart="5dp"
+                android:paddingLeft="5dp"
+                android:fontFamily="@font/robotomedium"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="35dp"
+            android:layout_marginBottom="4dp"
+            android:id="@+id/lyEspecializaciones">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/especializaciones"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/especializaciones"
+                android:textSize="15sp"
+                android:textColor="@color/blanco"
+                android:padding="2dp"
+                android:paddingStart="5dp"
+                android:paddingLeft="5dp"
+                android:fontFamily="@font/robotomedium"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="35dp"
+            android:id="@+id/lyUbicacion">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ubicacion"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ubicacion"
+                android:textSize="15sp"
+                android:textColor="@color/blanco"
+                android:padding="2dp"
+                android:paddingStart="5dp"
+                android:paddingLeft="5dp"
+                android:fontFamily="@font/robotomedium"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:gravity="right"
+        android:layout_weight="0.17">
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/facebook"
+            android:layout_gravity="center"
+            android:layout_marginRight="5dp"
+            android:id="@+id/ivFacebook"/>
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/twitter"
+            android:layout_gravity="center"
+            android:layout_marginRight="5dp"
+            android:id="@+id/ivTwitter"/>
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/instagram"
+            android:layout_gravity="center"
+            android:layout_marginRight="5dp"
+            android:id="@+id/ivInstagram"/>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="25dp"
+            android:src="@drawable/pqrs"
+            android:layout_gravity="center"
+            android:layout_marginRight="50dp"
+            android:id="@+id/ivPqrs"/>
+
+        <ImageView
+            android:layout_width="155dp"
+            android:layout_height="65dp"
+            android:src="@drawable/logo_escuela"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Actividades.PosgradosActivity"
+    android:background="@drawable/fondo_internas">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tvEsp"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="40dp"
+        android:textColor="@color/blanco"
+        android:fontFamily="@font/robotomedium"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/blanco"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:transcriptMode="normal"
+        android:divider="@color/blanco"
+        android:dividerHeight="1dp"
+        android:listSelector="@color/selector"
+        android:textAlignment="center"
+        android:id="@+id/lvPosgrados">
+
+    </ListView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/blanco"/>
+
+</LinearLayout>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@android:color/transparent"
+    app:cardElevation="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="7">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="5">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tvNombreModulo"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/blanco"
+                        android:fontFamily="@font/robotomedium"
+                        android:layout_marginRight="10dp"
+                        android:id="@+id/tvNombreModulo"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tvDuracionModulo"
+                        android:textSize="15sp"
+                        android:textColor="@color/blanco"
+                        android:fontFamily="@font/opensansregular"
+                        android:layout_marginRight="10dp"
+                        android:id="@+id/tvDuracionModulo"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tvNombreDocente"
+                        android:textColor="@color/amarillo"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/opensansregular"
+                        android:layout_marginRight="10dp"
+                        android:id="@+id/tvNombreDocente"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="15dp"
+                        android:weightSum="8">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="24dp"
+                            android:src="@drawable/icono_persona"
+                            android:layout_weight="1"
+                            android:id="@+id/ivDetalleDocente"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="24dp"
+                            android:src="@drawable/icono_clase"
+                            android:layout_weight="1"
+                            android:id="@+id/ivContenido" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="24dp"
+                            android:src="@drawable/icono_horario"
+                            android:layout_weight="1"
+                            android:id="@+id/ivHorario"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="24dp"
+                            android:src="@drawable/alerta"
+                            android:layout_weight="1"
+                            android:id="@+id/ivAlerta"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="140dp"
+                    android:layout_weight="2"
+                    android:id="@+id/rlFotoDocente">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="top"
+                        android:src="@drawable/av1"
+                        android:layout_marginTop="8dp"
+                        android:scaleType="fitStart"
+                        android:id="@+id/ivFotoDocente"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tvEvaluacion"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:fontFamily="@font/opensansregular"
+                    android:textColor="@color/blanco"/>
+
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleY="0.5"
+                    android:scaleX="0.5"
+                    android:transformPivotX="0dp"
+                    android:transformPivotY="0dp"
+                    android:stepSize="1"
+                    android:numStars="5"
+                    android:layout_marginBottom="-32dp"
+                    android:layout_marginRight="-110dp"
+                    android:theme="@style/RatingBar"
+                    android:id="@+id/rbCalificacion"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/blanco"
+                    android:text="@string/tvCalificacion"
+                    android:fontFamily="@font/opensansbold"
+                    android:id="@+id/tvCalificacion"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/blanco"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

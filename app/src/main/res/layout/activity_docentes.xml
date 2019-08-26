@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context=".Actividades.DocentesActivity"
+    android:background="@drawable/fondo_internas">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tvDocentes"
+        android:textSize="25sp"
+        android:textColor="@color/blanco"
+        android:layout_margin="30dp"
+        android:textAlignment="center"
+        android:fontFamily="@font/robotomedium"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/blanco"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:transcriptMode="normal"
+        android:divider="@color/blanco"
+        android:dividerHeight="1dp"
+        android:listSelector="@color/selector"
+        android:textAlignment="center"
+        android:id="@+id/lvDocentes">
+
+    </ListView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/blanco"/>
+
+</LinearLayout>
