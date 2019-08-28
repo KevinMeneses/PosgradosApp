@@ -1,14 +1,11 @@
 package co.edu.uniautonoma.posgradosapp.Actividades;
 
-import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -18,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,7 +34,7 @@ import co.edu.uniautonoma.posgradosapp.R;
 import co.edu.uniautonoma.posgradosapp.ViewModels.PrincipalViewModel;
 import xdroid.toaster.Toaster;
 
-public class PrincipalActivity extends AppCompatActivity {
+public class PrincipalActivity extends BaseActivity {
 
     private TextView tvEspecializacion;
     private TextView tvSemestre;
@@ -108,6 +104,8 @@ public class PrincipalActivity extends AppCompatActivity {
 
     private void ObtenerInformacion(){
 
+        mostrarDialog();
+
         adapterPrincipal = new AdapterPrincipal();
 
         PrincipalViewModel viewModel = ViewModelProviders.of(this).get(PrincipalViewModel.class);
@@ -124,8 +122,10 @@ public class PrincipalActivity extends AppCompatActivity {
                 LlenarLista();
             });
         }else{
+            ocultarDialog();
             Toaster.toast(R.string.EstadoServidor);
         }
+        ocultarDialog();
     }
 
     private void LlenarLista() {

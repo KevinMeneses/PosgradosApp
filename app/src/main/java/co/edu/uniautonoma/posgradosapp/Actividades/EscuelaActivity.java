@@ -10,7 +10,7 @@ import co.edu.uniautonoma.posgradosapp.R;
 import co.edu.uniautonoma.posgradosapp.ViewModels.EscuelaViewModel;
 import xdroid.toaster.Toaster;
 
-public class EscuelaActivity extends AppCompatActivity {
+public class EscuelaActivity extends BaseActivity {
 
     EscuelaViewModel escuelaViewModel;
     TextView tvDescripcionescuela;
@@ -28,14 +28,20 @@ public class EscuelaActivity extends AppCompatActivity {
     }
 
     private void ObtenerEscuela(){
+
+        mostrarDialog();
         escuelaViewModel = ViewModelProviders.of(this).get(EscuelaViewModel.class);
+
         if(escuelaViewModel.getEscuela()!=null) {
             escuelaViewModel.getEscuela().observe(this, escuela -> {
                 tvDescripcionescuela.setText(escuela.getDescripcion());
-                tvDirector.setText(escuela.getDirector());
+                String director = "Director: " + escuela.getDirector();
+                tvDirector.setText(director);
             });
         }else{
+            ocultarDialog();
             Toaster.toast(R.string.EstadoServidor);
         }
+        ocultarDialog();
     }
 }
