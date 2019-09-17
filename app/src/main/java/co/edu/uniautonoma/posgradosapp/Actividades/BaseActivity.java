@@ -5,8 +5,6 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import co.edu.uniautonoma.posgradosapp.R;
-
 public abstract class BaseActivity extends AppCompatActivity {
 
     private ProgressDialog dialog;
@@ -16,7 +14,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         dialog = new ProgressDialog(this);
         dialog.setMessage("Cargando...");
-        dialog.setCancelable(false);
+        dialog.setCancelable(true);
         dialog.setIndeterminate(true);
     }
 

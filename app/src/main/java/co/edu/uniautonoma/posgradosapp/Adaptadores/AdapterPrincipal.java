@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import co.edu.uniautonoma.posgradosapp.Dao.CalificacionesDao;
 import co.edu.uniautonoma.posgradosapp.Modelos.Calificaciones;
@@ -23,12 +24,12 @@ import co.edu.uniautonoma.posgradosapp.R;
 
 public class AdapterPrincipal extends RecyclerView.Adapter<AdapterPrincipal.ModulosViewHolder>{
 
-    private ArrayList<Modulos> modulos;
-    private ArrayList<Docentes> docentes;
-    private ArrayList<Calificaciones> calificaciones;
+    private List<Modulos> modulos;
+    private List<Docentes> docentes;
+    private List<Calificaciones> calificaciones;
     private ClickListener clickListener;
 
-    public void setInfo(ArrayList<Modulos> modulos, ArrayList<Docentes> docentes, ArrayList<Calificaciones> calificaciones){
+    public void setInfo(List<Modulos> modulos, List<Docentes> docentes, List<Calificaciones> calificaciones){
         this.modulos = modulos;
         this.docentes = docentes;
         this.calificaciones = calificaciones;

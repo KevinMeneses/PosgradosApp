@@ -2,7 +2,6 @@ package co.edu.uniautonoma.posgradosapp.Modelos;
 
 public class Docentes {
     private String id;
-    private String id_posgrado;
     private String nombre;
     private String apellido;
     private String profesion;
@@ -51,10 +50,6 @@ public class Docentes {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public String getId_posgrado() {
-        return id_posgrado;
     }
 
 }

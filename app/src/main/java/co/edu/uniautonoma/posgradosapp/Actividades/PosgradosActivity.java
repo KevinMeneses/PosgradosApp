@@ -11,15 +11,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import co.edu.uniautonoma.posgradosapp.Modelos.Posgrados;
 import co.edu.uniautonoma.posgradosapp.R;
 import co.edu.uniautonoma.posgradosapp.ViewModels.PosgradosViewModel;
 import xdroid.toaster.Toaster;
 
-public class PosgradosActivity extends AppCompatActivity {
+public class PosgradosActivity extends BaseActivity {
 
-    private ArrayList<Posgrados> posgrados = new ArrayList<>();
+    private List<Posgrados> posgrados = new ArrayList<>();
     private ArrayList<String> listaposgrados = new ArrayList<>();
 
     @Override
@@ -35,6 +36,12 @@ public class PosgradosActivity extends AppCompatActivity {
         }else {
             Toaster.toast(R.string.EstadoServidor);
         }
+        viewModel.getEstado().observe(this, estado ->{
+            if(estado)
+                mostrarDialog();
+            else
+                ocultarDialog();
+        });
     }
 
     private void llenarPosgrados() {

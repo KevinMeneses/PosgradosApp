@@ -26,7 +26,7 @@ import co.edu.uniautonoma.posgradosapp.R;
 import co.edu.uniautonoma.posgradosapp.ViewModels.InicioSesionViewModel;
 import xdroid.toaster.Toaster;
 
-public class InicioSesionActivity extends AppCompatActivity {
+public class InicioSesionActivity extends BaseActivity {
 
     private GoogleSignInClient mGoogleSignInClient;
     private int RC_SIGN_IN = 101;
@@ -170,11 +170,11 @@ public class InicioSesionActivity extends AppCompatActivity {
     }
 
     private void IniciarSesion(GoogleSignInAccount correo){
+        InicioSesionViewModel viewModel = ViewModelProviders.of(this).get(InicioSesionViewModel.class);
         if (correo!=null){
-            InicioSesionViewModel usuario = ViewModelProviders.of(this).get(InicioSesionViewModel.class);
-            usuario.EnviarPeticion(correo.getEmail());
-            if(usuario.getUsuario()!=null){
-                usuario.getUsuario().observe(this, item -> {
+            viewModel.EnviarPeticion(correo.getEmail());
+            if(viewModel.getUsuario()!=null){
+                viewModel.getUsuario().observe(this, item -> {
                     Intent i = new Intent(InicioSesionActivity.this, PrincipalActivity.class);
                     i.putExtra("id_usuario", item.getCodigo());
                     i.putExtra("id_posgrado", item.getId_posgrado());

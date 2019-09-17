@@ -39,9 +39,14 @@ public class EscuelaActivity extends BaseActivity {
                 tvDirector.setText(director);
             });
         }else{
-            ocultarDialog();
             Toaster.toast(R.string.EstadoServidor);
         }
-        ocultarDialog();
+
+        escuelaViewModel.getEstado().observe(this, estado ->{
+            if(estado)
+                mostrarDialog();
+            else
+                ocultarDialog();
+        });
     }
 }

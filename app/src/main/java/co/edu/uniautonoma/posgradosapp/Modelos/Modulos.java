@@ -2,10 +2,8 @@ package co.edu.uniautonoma.posgradosapp.Modelos;
 
 public class Modulos {
     private String id;
-    private String id_posgrado;
     private String id_docente;
     private String nombre;
-    private int semestre;
     private String descripcion;
     private int creditos;
     private String duracion;
@@ -27,10 +25,6 @@ public class Modulos {
         this.id = id;
     }
 
-    public String getId_posgrado() {
-        return id_posgrado;
-    }
-
     public String getId_docente() {
         return id_docente;
     }
@@ -41,10 +35,6 @@ public class Modulos {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public int getSemestre() {
-        return semestre;
     }
 
     public String getDescripcion() {

@@ -1,19 +1,12 @@
 package co.edu.uniautonoma.posgradosapp.Modelos;
 
-import com.google.gson.annotations.SerializedName;
-
 public class Escuela {
-    @SerializedName("coordenada1")
+
     private Double coordenada1;
-    @SerializedName("coordenada2")
     private Double coordenada2;
-    @SerializedName("correo")
     private String correo;
-    @SerializedName("descripcion")
     private String descripcion;
-    @SerializedName("direccion")
     private String direccion;
-    @SerializedName("director")
     private String director;
 
     public Escuela(String director, String descripcion, String correo, String direccion, Double coordenada1, Double coordenada2) {

@@ -1,10 +1,12 @@
 package co.edu.uniautonoma.posgradosapp.Modelos;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Calificaciones {
-    private String id;
     private String id_usuario;
-    private String id_docente;
+    @SerializedName("calificacion")
     private float calificacion;
+    @SerializedName("promedio")
     private float promedio;
 
     public Calificaciones(String id_usuario, float calificacion, float promedio) {

@@ -56,7 +56,7 @@ public class CalificacionesDao {
             HashMap<String,String> httpParams = new HashMap();
             calificacion = new ArrayList<>();
 
-            for (int i = 0; i < id_docentes.size(); i++) {
+            for (int i=0; i < id_docentes.size(); i++) {
                 httpParams.clear();
                 httpParams.put("id_docente", id_docentes.get(i));
                 JSONObject jsonObject = httpJsonParser.makeHttpRequest(

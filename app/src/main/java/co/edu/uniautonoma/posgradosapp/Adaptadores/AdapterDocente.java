@@ -10,18 +10,18 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import co.edu.uniautonoma.posgradosapp.Modelos.Docentes;
 import co.edu.uniautonoma.posgradosapp.R;
 
 public class AdapterDocente extends BaseAdapter {
 
-    Context context;
-    ArrayList<Docentes> docente;
-    LayoutInflater inflater;
+    private Context context;
+    private List<Docentes> docente;
+    private LayoutInflater inflater;
 
-    public AdapterDocente(Context context, ArrayList<Docentes> docente) {
+    public AdapterDocente(Context context, List<Docentes> docente) {
         this.context = context;
         this.docente = docente;
         inflater = (LayoutInflater.from(context));

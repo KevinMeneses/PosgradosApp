@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import co.edu.uniautonoma.posgradosapp.Helper.HttpJsonParser;
 import co.edu.uniautonoma.posgradosapp.Modelos.Modulos;
@@ -24,9 +25,9 @@ import co.edu.uniautonoma.posgradosapp.R;
 import co.edu.uniautonoma.posgradosapp.ViewModels.ModulosViewModel;
 import xdroid.toaster.Toaster;
 
-public class ModulosActivity extends AppCompatActivity {
+public class ModulosActivity extends BaseActivity {
 
-    private ArrayList<Modulos> modulos = new ArrayList<>();
+    private List<Modulos> modulos = new ArrayList<>();
     private ArrayList<String> nombremodulos = new ArrayList<>();
 
     @Override
@@ -46,6 +47,13 @@ public class ModulosActivity extends AppCompatActivity {
         }else {
             Toaster.toast(R.string.EstadoServidor);
         }
+
+        viewModel.getEstado().observe(this, estado ->{
+            if (estado)
+                mostrarDialog();
+            else
+                ocultarDialog();
+        });
     }
 
     private void llenarLista() {

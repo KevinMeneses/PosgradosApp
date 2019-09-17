@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -33,7 +34,7 @@ import co.edu.uniautonoma.posgradosapp.R;
 import co.edu.uniautonoma.posgradosapp.ViewModels.UbicacionViewModel;
 import xdroid.toaster.Toaster;
 
-public class UbicacionActivity extends FragmentActivity implements OnMapReadyCallback,
+public class UbicacionActivity extends BaseActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
@@ -81,6 +82,13 @@ public class UbicacionActivity extends FragmentActivity implements OnMapReadyCal
                 AgregarMarcador();
             });
         }
+
+        viewModel.getEstado().observe(this, estado ->{
+            if (estado)
+                mostrarDialog();
+            else
+                ocultarDialog();
+        });
     }
 
     protected synchronized void buildGoogleApiClient() {

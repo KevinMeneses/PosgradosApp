@@ -23,6 +23,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import co.edu.uniautonoma.posgradosapp.Adaptadores.AdapterPrincipal;
 import co.edu.uniautonoma.posgradosapp.Helper.AlarmReceiver;
@@ -40,12 +41,11 @@ public class PrincipalActivity extends BaseActivity {
     private TextView tvSemestre;
     private RecyclerView rvModulos;
 
-
     private AdapterPrincipal adapterPrincipal;
-    private ArrayList<Modulos> modulos = new ArrayList<>();
-    private ArrayList<Docentes> docentes = new ArrayList<>();
-    private ArrayList<Horarios> horarios = new ArrayList<>();
-    private ArrayList<Calificaciones> calificaciones = new ArrayList<>();
+    private List<Modulos> modulos = new ArrayList<>();
+    private List<Docentes> docentes = new ArrayList<>();
+    private List<Horarios> horarios = new ArrayList<>();
+    private List<Calificaciones> calificaciones = new ArrayList<>();
 
     private String id_usuario;
     private String id_posgrado;
@@ -104,8 +104,6 @@ public class PrincipalActivity extends BaseActivity {
 
     private void ObtenerInformacion(){
 
-        mostrarDialog();
-
         adapterPrincipal = new AdapterPrincipal();
 
         PrincipalViewModel viewModel = ViewModelProviders.of(this).get(PrincipalViewModel.class);
@@ -122,10 +120,15 @@ public class PrincipalActivity extends BaseActivity {
                 LlenarLista();
             });
         }else{
-            ocultarDialog();
             Toaster.toast(R.string.EstadoServidor);
         }
-        ocultarDialog();
+
+        viewModel.getEstado().observe(this, estado ->{
+            if (estado)
+                mostrarDialog();
+            else
+                ocultarDialog();
+        });
     }
 
     private void LlenarLista() {
