@@ -45,6 +45,7 @@ public class InicioSesionViewModel extends AndroidViewModel {
                     }
                     @Override
                     public void onError(Throwable e) {
+                        usuario.setValue(null);
                     }
                     @Override
                     public void onComplete() {

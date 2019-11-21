@@ -1,6 +1,7 @@
 package co.edu.uniautonoma.posgradosapp.ViewModels;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -57,6 +58,7 @@ public class EscuelaViewModel extends AndroidViewModel {
 
                     @Override
                     public void onError(Throwable e) {
+                        escuela.setValue(null);
                         estado.setValue(false);
                     }
 

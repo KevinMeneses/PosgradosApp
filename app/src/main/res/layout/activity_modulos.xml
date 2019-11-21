@@ -5,17 +5,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     tools:context=".Actividades.ModulosActivity"
-    android:background="@drawable/fondo_internas">
+    android:background="@drawable/fondo_internas"
+    android:weightSum="1">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/tvModulos"
-        android:textAlignment="center"
-        android:textSize="25sp"
-        android:layout_margin="30dp"
-        android:textColor="@color/blanco"
-        android:fontFamily="@font/robotomedium"/>
+        android:layout_height="0dp"
+        android:layout_weight="0.15">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tvModulos"
+            android:textAlignment="center"
+            android:textSize="25sp"
+            android:textColor="@color/blanco"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="@font/robotomedium"/>
+
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
@@ -24,19 +32,15 @@
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:transcriptMode="normal"
         android:divider="@color/blanco"
         android:dividerHeight="1dp"
+        android:layout_weight="0.85"
         android:listSelector="@color/selector"
         android:id="@+id/lvModulos">
 
     </ListView>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/blanco"/>
 
 
 </LinearLayout>

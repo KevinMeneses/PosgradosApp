@@ -1,9 +1,8 @@
 package co.edu.uniautonoma.posgradosapp.Actividades;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.lifecycle.ViewModelProviders;
 
 import android.view.View;
@@ -11,15 +10,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import co.edu.uniautonoma.posgradosapp.Helper.HttpJsonParser;
 import co.edu.uniautonoma.posgradosapp.Modelos.Modulos;
 import co.edu.uniautonoma.posgradosapp.R;
 import co.edu.uniautonoma.posgradosapp.ViewModels.ModulosViewModel;

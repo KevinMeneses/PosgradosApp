@@ -38,21 +38,17 @@ public class PqrsViewModel extends AndroidViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Escuela>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-                    }
-
+                    public void onSubscribe(Disposable d) {}
                     @Override
                     public void onNext(Escuela response) {
                         escuela.setValue(response);
                     }
-
                     @Override
                     public void onError(Throwable e) {
+                        escuela.setValue(null);
                     }
-
                     @Override
-                    public void onComplete() {
-                    }
+                    public void onComplete() {}
                 });
     }
 }

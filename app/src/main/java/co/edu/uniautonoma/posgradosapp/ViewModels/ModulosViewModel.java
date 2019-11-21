@@ -55,6 +55,7 @@ public class ModulosViewModel extends AndroidViewModel {
 
                     @Override
                     public void onError(Throwable e) {
+                        modulos.setValue(null);
                         estado.setValue(false);
                     }
 

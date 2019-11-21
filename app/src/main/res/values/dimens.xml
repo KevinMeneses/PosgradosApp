@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="margen20">20dp</dimen>
-    <dimen name="tvlistaposgrado">19sp</dimen>
+    <dimen name="tvlistaposgrado">20sp</dimen>
     <dimen name="lista_docentes">12dp</dimen>
     <dimen name="lista_horarios">10dp</dimen>
 </resources>

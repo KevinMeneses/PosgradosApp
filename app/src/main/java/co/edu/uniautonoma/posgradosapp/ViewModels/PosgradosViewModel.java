@@ -54,6 +54,7 @@ public class PosgradosViewModel extends AndroidViewModel {
                     }
                     @Override
                     public void onError(Throwable e) {
+                        posgrados.setValue(null);
                         estado.setValue(false);
                     }
                     @Override

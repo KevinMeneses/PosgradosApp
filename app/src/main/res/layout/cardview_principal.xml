@@ -152,6 +152,16 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textColor="@color/blanco"
+                    android:text="@string/tvtCalificacion"
+                    android:layout_marginRight="10dp"
+                    android:fontFamily="@font/opensansregular"
+                    android:id="@+id/tvtCalificacion"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/blanco"
                     android:text="@string/tvCalificacion"
                     android:fontFamily="@font/opensansbold"
                     android:id="@+id/tvCalificacion"/>

@@ -1,7 +1,6 @@
 package co.edu.uniautonoma.posgradosapp.ViewModels;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -70,8 +69,6 @@ public class PrincipalViewModel extends AndroidViewModel {
     private List<Horarios> horarios;
     private List<Docentes> docentes;
 
-    private Boolean termino = false;
-
     private String id_usuario;
     private String id_posgrado;
     private int semestre;
@@ -98,8 +95,6 @@ public class PrincipalViewModel extends AndroidViewModel {
 
         estado.setValue(true);
         Empezar();
-        if(termino){
-        EnviarDatos();}
     }
 
     private void Empezar(){
@@ -119,8 +114,7 @@ public class PrincipalViewModel extends AndroidViewModel {
                         posgrado = posgrados;
                     }
                     @Override
-                    public void onError(Throwable e) {
-                    }
+                    public void onError(Throwable e) {estado.setValue(false);}
                     @Override
                     public void onComplete() {
                         ObtenerModulos();
@@ -140,7 +134,7 @@ public class PrincipalViewModel extends AndroidViewModel {
                         modulos = response;
                     }
                     @Override
-                    public void onError(Throwable e) {}
+                    public void onError(Throwable e) {estado.setValue(false);}
                     @Override
                     public void onComplete() {
                         ObtenerDocentes();}
@@ -159,7 +153,7 @@ public class PrincipalViewModel extends AndroidViewModel {
                         docentes = response;
                     }
                     @Override
-                    public void onError(Throwable e) { }
+                    public void onError(Throwable e) {estado.setValue(false);}
                     @Override
                     public void onComplete() {
                         ObtenerHorario();}
@@ -178,15 +172,14 @@ public class PrincipalViewModel extends AndroidViewModel {
                         horarios = response;
                     }
                     @Override
-                    public void onError(Throwable e) { }
+                    public void onError(Throwable e) {estado.setValue(false);}
                     @Override
-                    public void onComplete() {
-                        ObtenerCalificaciones(); }
+                    public void onComplete() { ObtenerCalificaciones(); }
                 });
     }
 
     private void ObtenerCalificaciones() {
-        peticionesApi.getSomeCalificacion(id_posgrado,semestre,id_usuario)
+        peticionesApi.getSomeCalificaciones(id_posgrado,semestre,id_usuario)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<Calificaciones>>() {
@@ -197,12 +190,9 @@ public class PrincipalViewModel extends AndroidViewModel {
                         calificaciones = response;
                     }
                     @Override
-                    public void onError(Throwable e) {
-                        estado.setValue(false);
-                        Log.d("errTAG", e.getMessage());
-                    }
+                    public void onError(Throwable e) {estado.setValue(false);}
                     @Override
-                    public void onComplete() { termino = true;}
+                    public void onComplete() { EnviarDatos();}
                 });
     }
 

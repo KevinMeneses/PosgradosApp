@@ -109,25 +109,25 @@ public class PrincipalActivity extends BaseActivity {
         PrincipalViewModel viewModel = ViewModelProviders.of(this).get(PrincipalViewModel.class);
         viewModel.EnviarPeticion(id_posgrado, semestre, id_usuario);
 
-        if(viewModel.getInformacion()!=null){
-            viewModel.getInformacion().observe(this, informacion -> {
-                tvEspecializacion.setText(informacion.getPosgrados().getNombre());
-                modulos = informacion.getModulos();
-                docentes = informacion.getDocente();
-                calificaciones = informacion.getCalificaciones();
-                horarios = informacion.getHorario();
-                adapterPrincipal.setInfo(modulos,docentes,calificaciones);
-                LlenarLista();
-            });
-        }else{
-            Toaster.toast(R.string.EstadoServidor);
-        }
-
         viewModel.getEstado().observe(this, estado ->{
             if (estado)
                 mostrarDialog();
-            else
+            else{
+                if(viewModel.getInformacion()!=null){
+                    viewModel.getInformacion().observe(this, informacion -> {
+                        tvEspecializacion.setText(informacion.getPosgrados().getNombre());
+                        modulos = informacion.getModulos();
+                        docentes = informacion.getDocente();
+                        calificaciones = informacion.getCalificaciones();
+                        horarios = informacion.getHorario();
+                        adapterPrincipal.setInfo(modulos,docentes,calificaciones,id_usuario);
+                        LlenarLista();
+                    });
+                }else{
+                    Toaster.toast(R.string.EstadoServidor);
+                }
                 ocultarDialog();
+            }
         });
     }
 

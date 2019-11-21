@@ -46,6 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tvEstudiante"
+            android:textSize="15sp"
             android:textColor="@color/blanco"
             android:layout_above="@+id/btLogin"
             android:layout_centerHorizontal="true"
@@ -53,13 +54,13 @@
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
             android:text="@string/btLogin2"
             android:layout_centerInParent="true"
             android:textColor="@color/blanco"
             android:theme="@style/RaisedButton"
             android:fontFamily="@font/opensansbold"
-            android:textSize="12sp"
+            android:textSize="15sp"
             android:id="@+id/btLogin"/>
 
     </RelativeLayout>
@@ -187,28 +188,30 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:layout_weight="0.15">
+        android:layout_weight="0.15"
+        android:weightSum="1">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:orientation="horizontal"
             android:paddingLeft="35dp"
             android:layout_marginBottom="4dp"
+            android:layout_weight="0.333"
             android:id="@+id/lyEscuela">
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_height="match_parent"
                 android:src="@drawable/casita"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="@string/laescuela"
                 android:textSize="15sp"
                 android:textColor="@color/blanco"
-                android:padding="2dp"
+                android:padding="5dp"
                 android:paddingStart="5dp"
                 android:paddingLeft="5dp"
                 android:fontFamily="@font/robotomedium"/>
@@ -217,24 +220,25 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:orientation="horizontal"
             android:paddingLeft="35dp"
             android:layout_marginBottom="4dp"
+            android:layout_weight="0.333"
             android:id="@+id/lyEspecializaciones">
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_height="match_parent"
                 android:src="@drawable/especializaciones"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="@string/especializaciones"
                 android:textSize="15sp"
                 android:textColor="@color/blanco"
-                android:padding="2dp"
+                android:padding="5dp"
                 android:paddingStart="5dp"
                 android:paddingLeft="5dp"
                 android:fontFamily="@font/robotomedium"/>
@@ -243,23 +247,24 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:orientation="horizontal"
             android:paddingLeft="35dp"
+            android:layout_weight="0.333"
             android:id="@+id/lyUbicacion">
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_height="match_parent"
                 android:src="@drawable/ubicacion"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="@string/ubicacion"
                 android:textSize="15sp"
                 android:textColor="@color/blanco"
-                android:padding="2dp"
+                android:padding="5dp"
                 android:paddingStart="5dp"
                 android:paddingLeft="5dp"
                 android:fontFamily="@font/robotomedium"/>
@@ -272,7 +277,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="horizontal"
-        android:gravity="right"
+        android:gravity="end"
         android:layout_weight="0.17">
 
         <ImageView
@@ -304,7 +309,7 @@
             android:layout_height="25dp"
             android:src="@drawable/pqrs"
             android:layout_gravity="center"
-            android:layout_marginRight="50dp"
+            android:layout_marginRight="80dp"
             android:id="@+id/ivPqrs"/>
 
         <ImageView

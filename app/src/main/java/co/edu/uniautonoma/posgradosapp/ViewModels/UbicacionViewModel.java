@@ -59,6 +59,7 @@ public class UbicacionViewModel extends AndroidViewModel {
                     }
                     @Override
                     public void onError(Throwable e) {
+                        escuela.setValue(null);
                         estado.setValue(false);
                     }
                     @Override

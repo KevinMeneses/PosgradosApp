@@ -13,26 +13,32 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import co.edu.uniautonoma.posgradosapp.Dao.CalificacionesDao;
 import co.edu.uniautonoma.posgradosapp.Modelos.Calificaciones;
 import co.edu.uniautonoma.posgradosapp.Modelos.Docentes;
 import co.edu.uniautonoma.posgradosapp.Modelos.Modulos;
 import co.edu.uniautonoma.posgradosapp.R;
+import co.edu.uniautonoma.posgradosapp.Retrofit.PeticionesApi;
+import co.edu.uniautonoma.posgradosapp.Retrofit.RetrofitClient;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class AdapterPrincipal extends RecyclerView.Adapter<AdapterPrincipal.ModulosViewHolder>{
 
     private List<Modulos> modulos;
     private List<Docentes> docentes;
     private List<Calificaciones> calificaciones;
+    private String id_usuario;
     private ClickListener clickListener;
 
-    public void setInfo(List<Modulos> modulos, List<Docentes> docentes, List<Calificaciones> calificaciones){
+    public void setInfo(List<Modulos> modulos, List<Docentes> docentes, List<Calificaciones> calificaciones, String id_usuario){
         this.modulos = modulos;
         this.docentes = docentes;
         this.calificaciones = calificaciones;
+        this.id_usuario = id_usuario;
     }
 
     public void setClickListener(ClickListener clickListener) {
@@ -153,7 +159,76 @@ public class AdapterPrincipal extends RecyclerView.Adapter<AdapterPrincipal.Modu
     }
 
     private void SetCalificacion(int position, float calificacion) {
-        CalificacionesDao calificacionesDao = new CalificacionesDao();
-        calificacionesDao.postCalificaciones(calificacion, modulos.get(position).getId_docente());
+
+        PeticionesApi peticionesApi = RetrofitClient.getRetrofitInstance().create(PeticionesApi.class);
+
+        peticionesApi.getSomeCalificacion(id_usuario,modulos.get(position).getId_docente())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Calificaciones>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+                    @Override
+                    public void onNext(Calificaciones calificaciones) {
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        agregarCalificacion(calificacion,modulos.get(position).getId_docente());
+                    }
+                    @Override
+                    public void onComplete() {
+                        modificarCalificacion(calificacion,modulos.get(position).getId_docente());
+                    }
+                });
+    }
+
+    private void modificarCalificacion(float calificacion, String id_docente){
+        PeticionesApi peticionesApi = RetrofitClient.getRetrofitInstance().create(PeticionesApi.class);
+        peticionesApi.updateCalificacion(calificacion,id_usuario,id_docente)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Calificaciones>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+                    @Override
+                    public void onNext(Calificaciones calificaciones) {
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    private void agregarCalificacion(float calificacion, String id_docente){
+        PeticionesApi peticionesApi = RetrofitClient.getRetrofitInstance().create(PeticionesApi.class);
+        peticionesApi.addCalificacion(calificacion,id_usuario,id_docente)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Calificaciones>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Calificaciones calificaciones) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }

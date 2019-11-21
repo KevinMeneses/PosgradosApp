@@ -1,7 +1,7 @@
 package co.edu.uniautonoma.posgradosapp.Actividades;
 
 import android.content.Intent;
-import android.os.AsyncTask;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -10,12 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-
-import co.edu.uniautonoma.posgradosapp.Helper.HttpJsonParser;
 import co.edu.uniautonoma.posgradosapp.R;
 import co.edu.uniautonoma.posgradosapp.ViewModels.PqrsViewModel;
 import xdroid.toaster.Toaster;

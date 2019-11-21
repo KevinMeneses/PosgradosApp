@@ -58,6 +58,7 @@ public class DocentesViewModel extends AndroidViewModel {
 
                     @Override
                     public void onError(Throwable e) {
+                        docentes.setValue(null);
                         estado.setValue(false);
                     }
 

@@ -5,17 +5,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     tools:context=".Actividades.DocentesActivity"
-    android:background="@drawable/fondo_internas">
+    android:background="@drawable/fondo_internas"
+    android:weightSum="1">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/tvDocentes"
-        android:textSize="25sp"
-        android:textColor="@color/blanco"
-        android:layout_margin="30dp"
-        android:textAlignment="center"
-        android:fontFamily="@font/robotomedium"/>
+        android:layout_height="0dp"
+        android:layout_weight="0.15">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tvDocentes"
+            android:layout_gravity="center_vertical"
+            android:textSize="25sp"
+            android:textColor="@color/blanco"
+            android:textAlignment="center"
+            android:fontFamily="@font/robotomedium"/>
+
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
@@ -24,19 +32,15 @@
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:transcriptMode="normal"
         android:divider="@color/blanco"
         android:dividerHeight="1dp"
         android:listSelector="@color/selector"
         android:textAlignment="center"
+        android:layout_weight="0.85"
         android:id="@+id/lvDocentes">
 
     </ListView>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/blanco"/>
 
 </LinearLayout>
