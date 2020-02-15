@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentation.Actividades.DocentesActivity">
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/ivDocente"
+        android:layout_margin="@dimen/lista_docentes"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="26dp"
+        android:textSize="18sp"
+        android:textColor="@color/blanco"
+        android:layout_toRightOf="@+id/ivDocente"
+        android:layout_marginTop="@dimen/lista_docentes"
+        android:layout_marginRight="@dimen/lista_docentes"
+        android:fontFamily="@font/opensansregular"
+        android:id="@+id/tvNdocente"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="26dp"
+        android:textSize="18sp"
+        android:textColor="@color/blanco"
+        android:layout_toRightOf="@+id/ivDocente"
+        android:layout_below="@+id/tvNdocente"
+        android:layout_marginRight="@dimen/lista_docentes"
+        android:layout_marginBottom="@dimen/lista_docentes"
+        android:fontFamily="@font/opensansregular"
+        android:id="@+id/tvPdocente"/>
+
+</RelativeLayout>

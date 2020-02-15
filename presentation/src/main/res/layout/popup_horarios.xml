@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context=".presentation.Actividades.PrincipalActivity"
+    android:background="@color/amarillo"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tvDiahora"
+        android:textSize="18sp"
+        android:textColor="@color/blanco"
+        android:fontFamily="@font/opensansregular"
+        android:id="@+id/tvDiahora1"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tvDiahora"
+        android:textSize="18sp"
+        android:textColor="@color/blanco"
+        android:fontFamily="@font/opensansregular"
+        android:id="@+id/tvDiahora2"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tvSede"
+        android:textSize="18sp"
+        android:textColor="@color/blanco"
+        android:fontFamily="@font/opensansregular"
+        android:id="@+id/tvSede"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tvSalon"
+        android:textSize="18sp"
+        android:textColor="@color/blanco"
+        android:fontFamily="@font/opensansregular"
+        android:id="@+id/tvSalon"/>
+
+</LinearLayout>

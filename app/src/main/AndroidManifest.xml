@@ -23,7 +23,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Actividades.InicioSesionActivity"
+        <activity android:name=".presentation.ui.iniciosesion.InicioSesionActivity"
             android:screenOrientation="portrait">
 
             <intent-filter>
@@ -32,17 +32,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Actividades.PosgradosActivity"
+        <activity android:name=".presentation.ui.posgrados.PosgradosActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Actividades.PrincipalActivity"
+        <activity android:name=".presentation.ui.principal.PrincipalActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Actividades.ModulosActivity"
+        <activity android:name=".presentation.ui.modulos.ModulosActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Actividades.DetalleModuloActivity"
+        <activity android:name=".presentation.ui.modulos.DetalleModuloActivity"
             />
-        <activity android:name=".Actividades.DocentesActivity"
+        <activity android:name=".presentation.ui.docentes.DocentesActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Actividades.UbicacionActivity"
+        <activity android:name=".presentation.ui.ubicacion.UbicacionActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -56,20 +56,20 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".Actividades.DetalleDocenteActivity"
+        <activity android:name=".presentation.ui.docentes.DetalleDocenteActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Actividades.DetallePosgradoActivity"
+        <activity android:name=".presentation.ui.posgrados.DetallePosgradoActivity"
             android:screenOrientation="portrait"/>
 
-        <receiver android:name=".Helper.AlarmReceiver">
+        <receiver android:name=".presentation.helper.AlarmReceiver">
             <intent-filter>
                 <action android:name="ALARMA" />
             </intent-filter>
         </receiver>
 
-        <activity android:name=".Actividades.EscuelaActivity"
+        <activity android:name=".presentation.ui.escuela.EscuelaActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Actividades.PqrsActivity"
+        <activity android:name=".presentation.ui.pqrs.PqrsActivity"
             android:screenOrientation="portrait"/>
     </application>
 

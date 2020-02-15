@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.Actividades.DetallePosgradoActivity"
+    android:orientation="vertical"
+    android:background="@drawable/fondo_internas"
+    android:padding="@dimen/margen20"
+    android:weightSum="1">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.17">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:textAlignment="center"
+            android:text="@string/tituloposgrado"
+            android:textSize="30sp"
+            android:textColor="@color/blanco"
+            android:fontFamily="@font/robotomedium"
+            android:id="@+id/tvNombreposgrado"/>
+
+    </ScrollView>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="25dp"
+        android:layout_weight="0.2">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/codsnies"
+            android:textSize="15sp"
+            android:layout_below="@id/tvNombreposgrado"
+            android:textColor="@color/blanco"
+            android:fontFamily="@font/opensansregular"
+            android:id="@+id/tvCod_snies"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvCod_snies"
+            android:text="@string/totalcred"
+            android:textSize="15sp"
+            android:textColor="@color/blanco"
+            android:fontFamily="@font/opensansregular"
+            android:id="@+id/tvTotalcreditos"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/duracion"
+            android:textSize="15sp"
+            android:textColor="@color/blanco"
+            android:layout_below="@id/tvTotalcreditos"
+            android:fontFamily="@font/opensansregular"
+            android:id="@+id/tvDuracion"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvDuracion"
+            android:text="@string/valorsemestre"
+            android:textSize="15sp"
+            android:textColor="@color/blanco"
+            android:fontFamily="@font/opensansregular"
+            android:id="@+id/tvValorsemestre"/>
+
+    </LinearLayout>
+
+    <com.uncopt.android.widget.text.justify.JustifiedTextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="@string/descripcion"
+        android:textSize="20sp"
+        android:layout_below="@id/tvValorsemestre"
+        android:textColor="@color/blanco"
+        android:fontFamily="@font/opensansregular"
+        android:layout_marginBottom="20dp"
+        android:maxHeight="160dp"
+        android:layout_weight="0.4"
+        android:id="@+id/tvDescripcionposgrado"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="0.2">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="18sp"
+            android:text="@string/modulos"
+            android:textColor="@color/blanco"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/opensansregular"
+            android:id="@+id/tvOpModulos"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/blanco"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:padding="10dp"
+            android:text="@string/docentes"
+            android:textColor="@color/blanco"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/opensansregular"
+            android:id="@+id/tvOpDocentes"/>
+
+    </LinearLayout>
+
+</LinearLayout>
