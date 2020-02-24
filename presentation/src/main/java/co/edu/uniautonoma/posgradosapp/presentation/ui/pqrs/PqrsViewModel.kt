@@ -1,36 +1,28 @@
 package co.edu.uniautonoma.posgradosapp.presentation.ui.pqrs
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import co.edu.uniautonoma.posgradosapp.domain.entity.Escuela
+import androidx.lifecycle.*
+import co.edu.uniautonoma.posgradosapp.domain.usecase.EscuelaUseCase
+import co.edu.uniautonoma.posgradosapp.domain.util.Result
+import kotlinx.coroutines.launch
 
-class PqrsViewModel(application: Application) : AndroidViewModel(application) {
-    var escuela: MutableLiveData<Escuela?>? = null
+class PqrsViewModel(private val escuelaUseCase: EscuelaUseCase) : ViewModel() {
 
-    fun getEscuela(): LiveData<Escuela?>? {
-        EnviarPeticion()
-        return escuela
+    private val destinatario = MediatorLiveData<String>()
+    private val error = MediatorLiveData<String>()
+
+    val destinatarioLiveData: LiveData<String> get() = destinatario
+    val errorLiveData: LiveData<String> get() = error
+
+    fun getDestinatario() {
+        viewModelScope.launch {
+            when(val response = escuelaUseCase.getDestinatario()){
+                is Result.Success -> destinatario.postValue(response.data)
+                is Result.Error -> error.postValue(response.exception.message)
+            }
+        }
     }
 
-    private fun EnviarPeticion() {
-        escuela = MutableLiveData()
-        val peticionesApi: PeticionesApi = RetrofitClient.getRetrofitInstance().create(PeticionesApi::class.java)
-        peticionesApi.getEscuela(1)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<Escuela?>() {
-                    fun onSubscribe(d: Disposable?) {}
-                    fun onNext(response: Escuela?) {
-                        escuela!!.setValue(response)
-                    }
-
-                    fun onError(e: Throwable?) {
-                        escuela!!.setValue(null)
-                    }
-
-                    fun onComplete() {}
-                })
+    init {
+        getDestinatario()
     }
 }

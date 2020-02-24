@@ -12,11 +12,18 @@ class DetalleDocenteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detalle_docente)
 
-        val docente = intent
+        setViews()
+    }
 
-        Glide.with(this@DetalleDocenteActivity).load(docente.getStringExtra("imagen")).into(ivFoto!!)
-        tvNombre!!.text = docente.getStringExtra("nombre")
-        tvProfesion!!.text = docente.getStringExtra("profesion")
-        tvDescripcion!!.text = docente.getStringExtra("descripcion")
+    private fun setViews() {
+        val foto = intent.getStringExtra("imagen")
+        val nombre = intent.getStringExtra("nombre")
+        val profesion = intent.getStringExtra("profesion")
+        val descripcion = intent.getStringExtra("descripcion")
+
+        Glide.with(this@DetalleDocenteActivity).load(foto).into(ivFoto)
+        tvNombre.text = nombre
+        tvProfesion.text = profesion
+        tvDescripcion.text = descripcion
     }
 }

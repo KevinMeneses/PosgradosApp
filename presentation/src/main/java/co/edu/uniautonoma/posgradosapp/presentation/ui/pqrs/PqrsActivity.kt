@@ -2,32 +2,41 @@ package co.edu.uniautonoma.posgradosapp.presentation.ui.pqrs
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import co.edu.uniautonoma.posgradosapp.presentation.R
+import co.edu.uniautonoma.posgradosapp.presentation.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_pqrs.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import xdroid.toaster.Toaster
 
-class PqrsActivity : AppCompatActivity() {
+class PqrsActivity : BaseActivity() {
+
+    private val pqrsViewModel: PqrsViewModel by viewModel()
+    private var destinatario = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pqrs)
 
-        var destinatario = ""
-        val viewModel = ViewModelProvider(this)[PqrsViewModel::class.java]
+        observarResultados()
+        enviarCorreo()
+    }
 
-        if (viewModel.escuela != null) {
-            viewModel.escuela?.observe(this, Observer {
-                destinatario = it!!.getCorreo()
-            })
-        } else {
+    private fun observarResultados() {
+        pqrsViewModel.destinatarioLiveData.observe(this, Observer {
+            destinatario = it
+        })
+
+        pqrsViewModel.errorLiveData.observe(this, Observer {
             Toaster.toast(R.string.EstadoServidor)
-        }
+            Log.d("PqrsError:", it)
+        })
+    }
 
+    private fun enviarCorreo() {
         btEnviar.setOnClickListener {
-
             val emailIntent = Intent(Intent.ACTION_SEND)
             val comentario = etComentario!!.text.toString()
 

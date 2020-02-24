@@ -6,40 +6,33 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import co.edu.uniautonoma.posgradosapp.domain.entity.Informacion
 import co.edu.uniautonoma.posgradosapp.presentation.R
 import co.edu.uniautonoma.posgradosapp.presentation.adapter.AdapterPrincipal
 import co.edu.uniautonoma.posgradosapp.presentation.helper.AlarmReceiver
-import co.edu.uniautonoma.posgradosapp.domain.entity.Calificaciones
-import co.edu.uniautonoma.posgradosapp.domain.entity.Docentes
-import co.edu.uniautonoma.posgradosapp.domain.entity.Horarios
-import co.edu.uniautonoma.posgradosapp.domain.entity.Modulos
 import co.edu.uniautonoma.posgradosapp.presentation.ui.base.BaseActivity
 import co.edu.uniautonoma.posgradosapp.presentation.ui.docentes.DetalleDocenteActivity
 import co.edu.uniautonoma.posgradosapp.presentation.ui.modulos.DetalleModuloActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_principal.*
 import kotlinx.android.synthetic.main.popup_horarios.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import xdroid.toaster.Toaster
 import java.util.*
 
 class PrincipalActivity : BaseActivity() {
 
+    private val principalViewModel: PrincipalViewModel by viewModel()
     private var adapterPrincipal: AdapterPrincipal? = null
-    private var modulos: MutableList<Modulos> = ArrayList()
-    private var docentes: MutableList<Docentes> = ArrayList()
-    private var horarios: MutableList<Horarios> = ArrayList()
-    private var calificaciones: MutableList<Calificaciones> = ArrayList()
-    private var id_usuario: String? = null
-    private var id_posgrado: String? = null
+    private var informacion: Informacion? =null
     private var semestre = 0
     private var estadoalarma = false
 
@@ -47,27 +40,29 @@ class PrincipalActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_principal)
 
-        id_usuario = intent.getStringExtra("id_usuario")
-        semestre = intent.getIntExtra("semestre", 0)
-        id_posgrado = intent.getStringExtra("id_posgrado")
-
-        val btSemestre1 = findViewById<View>(R.id.btSemestre1) as Button
-        btSemestre1.setOnClickListener {
-            if (semestre != 1) {
-                CargarSemestre(1)
-            }
-        }
-        val btSemestre2 = findViewById<View>(R.id.btSemestre2) as Button
-        btSemestre2.setOnClickListener {
-            if (semestre != 2) {
-                CargarSemestre(2)
-            }
-        }
-        SetSemestre()
-        ObtenerInformacion()
+        mostrarDialog()
+        semestreClickListener()
+        setSemestre()
+        enviarPeticion()
+        observarResultado()
+        modulosClickListener()
     }
 
-    private fun SetSemestre() {
+    private fun semestreClickListener() {
+        btSemestre1.setOnClickListener {
+            if (semestre != 1) {
+                cargarSemestre(1)
+            }
+        }
+
+        btSemestre2.setOnClickListener {
+            if (semestre != 2) {
+                cargarSemestre(2)
+            }
+        }
+    }
+
+    private fun setSemestre() {
         runOnUiThread {
             if (semestre == 1) {
                 tvSemestre.setText("PRIMER SEMESTRE")
@@ -77,93 +72,94 @@ class PrincipalActivity : BaseActivity() {
         }
     }
 
-    private fun ObtenerInformacion() {
+    private fun enviarPeticion() {
 
-        adapterPrincipal = AdapterPrincipal()
-        val viewModel = ViewModelProvider(this)[PrincipalViewModel::class.java]
-        viewModel.EnviarPeticion(id_posgrado, semestre, id_usuario)
+        val id_usuario = intent.getStringExtra("id_usuario")
+        val semestre = intent.getIntExtra("semestre", 0)
+        val id_posgrado = intent.getStringExtra("id_posgrado")
 
-        viewModel.estado.observe(this, Observer {
-            if (it) mostrarDialog() else {
-                if (viewModel.informacion != null) {
-                    viewModel.informacion?.observe(this, Observer {
-                        it?.let {
-
-                        }
-                        tvEspecializacion.setText(it.posgrados.getNombre())
-                        modulos = it.modulos as MutableList<Modulos>
-                        docentes = it.docente as MutableList<Docentes>
-                        calificaciones = it.calificaciones as MutableList<Calificaciones>
-                        horarios = it.horario as MutableList<Horarios>
-                        adapterPrincipal?.setInfo(modulos, docentes, calificaciones, id_usuario)
-                        LlenarLista()
-                    })
-                } else {
-                    Toaster.toast(R.string.EstadoServidor)
-                }
-                ocultarDialog()
+        id_usuario?.let {it ->
+            id_posgrado?.let {it2 ->
+                principalViewModel.getPrincipal(it2, semestre, it)
             }
+        }
+
+    }
+
+    private fun observarResultado() {
+
+        principalViewModel.informacionLiveData.observe(this, Observer {
+            informacion = it
+            tvEspecializacion.setText(it.posgrados.nombre)
+            llenarLista()
+            ocultarDialog()
+        })
+
+        principalViewModel.errorLiveData.observe(this, Observer {
+            ocultarDialog()
+            Toaster.toast(R.string.EstadoServidor)
+            Log.d("PrincipalError:", it)
         })
     }
 
-    private fun LlenarLista() {
-        rvModulos!!.layoutManager = LinearLayoutManager(this)
-        rvModulos!!.adapter = adapterPrincipal
-
+    private fun modulosClickListener() {
         adapterPrincipal?.setClickListener(object : AdapterPrincipal.ClickListener {
             override fun onItemClicked(position: Int, tag: String?) {
                 when (tag) {
-                    "Docentes" -> VerDocente(position)
-                    "Modulos" -> VerModulo(position)
-                    "Horarios" -> if (!horarios.isEmpty()) {
-                        VerHorario()
-                    } else {
-                        Toaster.toast(R.string.msg_horario_err)
-                    }
-                    "Alerta" -> if (!horarios.isEmpty()) {
-                        SetAlerta()
-                    } else {
-                        Toaster.toast(R.string.msg_horario_err)
-                    }
+                    "Docentes" -> verDocente(position)
+                    "Modulos" -> verModulo(position)
+                    "Horarios" ->
+                        if (!informacion?.horario?.isEmpty()!!) verHorario()
+                        else Toaster.toast(R.string.msg_horario_err)
+                    "Alerta" ->
+                        if (!informacion?.horario?.isEmpty()!!) setAlarma()
+                        else Toaster.toast(R.string.msg_horario_err)
                 }
             }
         })
     }
 
-    private fun CargarSemestre(semestre: Int) {
-        this.semestre = semestre
-        LimpiarLista()
-        SetSemestre()
-        ObtenerInformacion()
+    private fun llenarLista() {
+        adapterPrincipal = AdapterPrincipal()
+        adapterPrincipal?.setInformacion(informacion)
+        rvModulos.layoutManager = LinearLayoutManager(this)
+        rvModulos.adapter = adapterPrincipal
     }
 
-    private fun LimpiarLista() {
-        rvModulos!!.removeAllViewsInLayout()
-        modulos.clear()
-        horarios.clear()
-        docentes.clear()
-        calificaciones.clear()
+    private fun cargarSemestre(semestre: Int) {
+        this.semestre = semestre
+        limpiarLista()
+        setSemestre()
+        enviarPeticion()
+    }
+
+    private fun limpiarLista() {
+        rvModulos.removeAllViewsInLayout()
         adapterPrincipal?.clear()
     }
 
-    private fun VerDocente(position: Int) {
+    private fun verDocente(position: Int) {
         val i = Intent(this@PrincipalActivity, DetalleDocenteActivity::class.java)
-        i.putExtra("nombre", docentes[position].getNombre().toString() + " " + docentes[position].getApellido())
-        i.putExtra("profesion", docentes[position].getProfesion())
-        i.putExtra("descripcion", docentes[position].getDescripcion())
-        i.putExtra("imagen", docentes[position].getImagen())
+        informacion?.run {
+            i.putExtra("nombre", docente[position].nombre + " " + docente[position].apellido)
+            i.putExtra("profesion", docente[position].profesion)
+            i.putExtra("descripcion", docente[position].descripcion)
+            i.putExtra("imagen", docente[position].imagen)
+        }
         startActivity(i)
     }
 
-    private fun VerModulo(position: Int) {
+    private fun verModulo(position: Int) {
         val i = Intent(this@PrincipalActivity, DetalleModuloActivity::class.java)
-        i.putExtra("nombre", modulos[position].getNombre())
-        i.putExtra("descripcion", modulos[position].getDescripcion())
-        i.putExtra("creditos", modulos[position].getCreditos())
+        informacion?.run {
+            i.putExtra("nombre", modulos[position].nombre)
+            i.putExtra("descripcion", modulos[position].descripcion)
+            i.putExtra("creditos", modulos[position].creditos)
+        }
         startActivity(i)
     }
 
-    private fun VerHorario() {
+    private fun verHorario() {
         val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val popupView: View = inflater.inflate(R.layout.popup_horarios, null)
         val dimen = LinearLayout.LayoutParams.WRAP_CONTENT
@@ -179,35 +175,40 @@ class PrincipalActivity : BaseActivity() {
             true
         }
 
-        val dia1: String = horarios[0].getDia().toString() + " " + horarios[0].getHora_inicio().substring(0, 5) + " - " + horarios[0].getHora_fin().substring(0, 5)
-        val dia2: String = horarios[1].getDia().toString() + " " + horarios[1].getHora_inicio().substring(0, 5) + " - " + horarios[1].getHora_fin().substring(0, 5)
-        val salon = "Salon " + horarios[0].getSalon()
+        informacion?.run {
+            val dia1: String = horario[0].dia + " " + horario[0].hora_inicio.substring(0, 5) + " - " + horario[0].hora_fin.substring(0, 5)
+            val dia2: String = horario[1].dia + " " + horario[1].hora_inicio.substring(0, 5) + " - " + horario[1].hora_fin.substring(0, 5)
+            val salon = "Salon " + horario[0].salon
 
-        tvDiahora1.text = dia1
-        tvDiahora2.text = dia2
-        tvSede.setText(horarios[0].getSede())
-        tvSalon.text = salon
+            tvDiahora1.text = dia1
+            tvDiahora2.text = dia2
+            tvSede.setText(horario[0].sede)
+            tvSalon.text = salon
+        }
     }
 
-    private fun SetAlerta() {
+    private fun setAlarma() {
+
         val manager = this@PrincipalActivity.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val alarmIntent = Intent(this@PrincipalActivity, AlarmReceiver::class.java)
         alarmIntent.action = "alarma"
         val pendingIntent1 = PendingIntent.getBroadcast(this@PrincipalActivity, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT)
         val pendingIntent2 = PendingIntent.getBroadcast(this@PrincipalActivity, 1, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
         if (!estadoalarma) {
             estadoalarma = true
             Snackbar.make(rvModulos!!, "Alerta activada", Snackbar.LENGTH_SHORT).show()
             val intervalo = 1000 * 60 * 60 * 24 * 7
             val viernes = Calendar.getInstance()
-            val horaviernes: Int = horarios[0].getHora_inicio().substring(0, 2).toInt() - 1
+            val horaviernes: Int = informacion!!.horario[0].hora_inicio.substring(0, 2).toInt() - 1
             viernes.timeInMillis = System.currentTimeMillis()
             viernes[Calendar.DAY_OF_WEEK] = 5
             viernes[Calendar.HOUR_OF_DAY] = horaviernes
             viernes[Calendar.MINUTE] = 30
             manager.setRepeating(AlarmManager.RTC_WAKEUP, viernes.timeInMillis, intervalo.toLong(), pendingIntent1)
+
             val sabado = Calendar.getInstance()
-            val horasabado: Int = horarios[1].getHora_inicio().substring(0, 2).toInt() - 1
+            val horasabado: Int = informacion!!.horario[1].hora_inicio.substring(0, 2).toInt() - 1
             sabado.timeInMillis = System.currentTimeMillis()
             sabado[Calendar.DAY_OF_WEEK] = 6
             sabado[Calendar.HOUR_OF_DAY] = horasabado

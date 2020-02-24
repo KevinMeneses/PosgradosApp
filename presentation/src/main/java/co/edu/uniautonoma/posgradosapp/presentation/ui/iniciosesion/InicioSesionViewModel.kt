@@ -1,35 +1,25 @@
 package co.edu.uniautonoma.posgradosapp.presentation.ui.iniciosesion
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import co.edu.uniautonoma.posgradosapp.domain.entity.Usuarios
+import androidx.lifecycle.*
+import co.edu.uniautonoma.posgradosapp.domain.entity.Usuario
+import co.edu.uniautonoma.posgradosapp.domain.usecase.InicioSesionUseCase
+import co.edu.uniautonoma.posgradosapp.domain.util.Result
+import kotlinx.coroutines.launch
 
-class InicioSesionViewModel(application: Application) : AndroidViewModel(application) {
+class InicioSesionViewModel(private val inicioSesionUseCase: InicioSesionUseCase) : ViewModel() {
 
-    var usuario: MutableLiveData<Usuarios?>? = null
+    private val usuario = MediatorLiveData<Usuario?>()
+    private val error = MediatorLiveData<String?>()
 
-    fun EnviarPeticion(correo: String?) {
+    val usuarioLiveData: LiveData<Usuario?> get() = usuario
+    val errorLiveData: LiveData<String?> get() = error
 
-        usuario = MutableLiveData()
-
-        val peticionesApi: PeticionesApi = RetrofitClient.getRetrofitInstance().create(PeticionesApi::class.java)
-
-        peticionesApi.getUsuario(correo)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<Usuarios?> {
-                    fun onSubscribe(d: Disposable?) {}
-                    fun onNext(usuarios: Usuarios?) {
-                        usuario!!.setValue(usuarios)
-                    }
-
-                    fun onError(e: Throwable?) {
-                        usuario!!.setValue(null)
-                    }
-
-                    fun onComplete() {}
-                })
+    fun enviarPeticion(correo: String) {
+        viewModelScope.launch {
+            when(val result = inicioSesionUseCase.iniciarSesion(correo)){
+                is Result.Success -> usuario.postValue(result.data)
+                is Result.Error -> error.postValue(result.exception.message)
+            }
+        }
     }
 }

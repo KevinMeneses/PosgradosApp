@@ -1,38 +1,26 @@
 package co.edu.uniautonoma.posgradosapp.presentation.ui.modulos
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
 import co.edu.uniautonoma.posgradosapp.domain.entity.Modulos
+import co.edu.uniautonoma.posgradosapp.domain.usecase.ModulosUseCase
+import co.edu.uniautonoma.posgradosapp.domain.util.Result
+import kotlinx.coroutines.launch
 
-class ModulosViewModel(application: Application) : AndroidViewModel(application) {
+class ModulosViewModel(private val modulosUseCase: ModulosUseCase) : ViewModel() {
 
-    var modulos: MutableLiveData<List<Modulos>?>? = null
-    val estado = MutableLiveData<Boolean>()
+    private val modulos = MediatorLiveData<List<Modulos>>()
+    private val error = MediatorLiveData<String>()
 
-    fun ObtenerModulos(id_posgrado: String?) {
-        modulos = MutableLiveData()
-        val peticionesApi: PeticionesApi = RetrofitClient.getRetrofitInstance().create(PeticionesApi::class.java)
-        peticionesApi.getAllModulos(id_posgrado)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<List<Modulos?>?>() {
-                    fun onSubscribe(d: Disposable?) {
-                        estado.setValue(true)
-                    }
+    val modulosLiveData: LiveData<List<Modulos>> get() = modulos
+    val errorLiveData: LiveData<String> get() = error
 
-                    fun onNext(response: List<Modulos>?) {
-                        modulos!!.setValue(response)
-                    }
-
-                    fun onError(e: Throwable?) {
-                        modulos!!.setValue(null)
-                        estado.setValue(false)
-                    }
-
-                    fun onComplete() {
-                        estado.setValue(false)
-                    }
-                })
+    fun getModulos(id_posgrado: String) {
+        viewModelScope.launch {
+            val result = modulosUseCase.getModulos(id_posgrado)
+            when(result){
+                is Result.Success -> modulos.postValue(result.data)
+                is Result.Error -> error.postValue(result.exception.message)
+            }
+        }
     }
 }

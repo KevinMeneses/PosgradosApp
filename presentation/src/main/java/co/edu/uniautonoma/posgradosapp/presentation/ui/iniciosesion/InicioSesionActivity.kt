@@ -5,7 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import co.edu.uniautonoma.posgradosapp.domain.entity.Usuario
 import co.edu.uniautonoma.posgradosapp.presentation.R
 import co.edu.uniautonoma.posgradosapp.presentation.helper.RevisarEstadoRed
 import co.edu.uniautonoma.posgradosapp.presentation.ui.base.BaseActivity
@@ -21,12 +21,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import kotlinx.android.synthetic.main.activity_inicio_sesion.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import xdroid.toaster.Toaster
 
 class InicioSesionActivity : BaseActivity() {
 
     private var mGoogleSignInClient: GoogleSignInClient? = null
     private val RC_SIGN_IN = 101
+
+    private val inicioSesionViewModel: InicioSesionViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +52,7 @@ class InicioSesionActivity : BaseActivity() {
 
         btLogin.setOnClickListener {
             if (RevisarEstadoRed.ConexionInternet(applicationContext)) {
+                mostrarDialog()
                 signIn()
             } else {
                 Toaster.toast(R.string.EstadoInternet)
@@ -113,7 +117,6 @@ class InicioSesionActivity : BaseActivity() {
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == RC_SIGN_IN) {
@@ -124,37 +127,48 @@ class InicioSesionActivity : BaseActivity() {
 
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
-            val account = completedTask.getResult(ApiException::class.java)
-            IniciarSesion(account)
+            val correo = completedTask.getResult(ApiException::class.java)
+            hacerPeticion(correo)
         } catch (e: ApiException) {
             Log.w(TAG, "signInResult:failed code=" + e.statusCode)
-            IniciarSesion(null)
+            hacerPeticion(null)
         }
     }
 
-    private fun IniciarSesion(correo: GoogleSignInAccount?) {
-
-        val viewModel = ViewModelProvider(this)[InicioSesionViewModel::class.java]
-
+    private fun hacerPeticion(correo: GoogleSignInAccount?) {
         if (correo != null) {
-            viewModel.EnviarPeticion(correo.email)
-            if (viewModel.usuario != null) {
-                viewModel.usuario?.observe(this, Observer {
-                    it?.let {
-                        val i = Intent(this@InicioSesionActivity, PrincipalActivity::class.java)
-                        i.putExtra("id_usuario", it.getCodigo())
-                        i.putExtra("id_posgrado", it.getId_posgrado())
-                        i.putExtra("semestre", it.getSemestre())
-                        Toaster.toast(it.getNombre().toString() + " " + it.getApellido() + "\n" + resources.getString(R.string.msg_inicio_exito))
-                        startActivity(i)
-                    }
-                })
-            } else {
-                Toaster.toast(R.string.EstadoServidor)
-            }
-        } else {
+            inicioSesionViewModel.enviarPeticion(correo.email!!)
+            observarResultados()
+        }
+        else {
             Toaster.toast(R.string.msg_correo_error)
         }
+    }
+
+    private fun observarResultados() {
+        inicioSesionViewModel.usuarioLiveData.observe(this, Observer {
+            it?.let {
+                ocultarDialog()
+                iniciarSesion(it)
+            }
+        })
+
+        inicioSesionViewModel.errorLiveData.observe(this, Observer {
+            it?.let {
+                ocultarDialog()
+                Toaster.toast(R.string.EstadoServidor)
+                Log.d("InicioSesionError:", it)
+            }
+        })
+    }
+
+    private fun iniciarSesion(it: Usuario) {
+        val i = Intent(this@InicioSesionActivity, PrincipalActivity::class.java)
+        i.putExtra("id_usuario", it.codigo)
+        i.putExtra("id_posgrado", it.id_posgrado)
+        i.putExtra("semestre", it.semestre)
+        Toaster.toast(it.nombre + " " + it.apellido + "\n" + resources.getString(R.string.msg_inicio_exito))
+        startActivity(i)
     }
 
     companion object {

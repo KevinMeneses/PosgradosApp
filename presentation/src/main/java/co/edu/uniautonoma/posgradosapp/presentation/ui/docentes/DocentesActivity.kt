@@ -2,50 +2,55 @@ package co.edu.uniautonoma.posgradosapp.presentation.ui.docentes
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import co.edu.uniautonoma.posgradosapp.presentation.R
 import co.edu.uniautonoma.posgradosapp.presentation.adapter.AdapterDocente
 import co.edu.uniautonoma.posgradosapp.domain.entity.Docentes
 import co.edu.uniautonoma.posgradosapp.presentation.ui.base.BaseActivity
+import kotlinx.android.synthetic.main.activity_docentes.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import xdroid.toaster.Toaster
 import java.util.*
 
 class DocentesActivity : BaseActivity() {
 
-    private var docentes: List<Docentes> = ArrayList()
+    private val docentesViewModel: DocentesViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_docentes)
 
+        mostrarDialog()
+        hacerPeticion()
+        observarResultados()
+    }
+
+    private fun hacerPeticion() {
         val id_posgrado = intent.getStringExtra("id_posgrado")
-        val viewModel = ViewModelProvider(this)[DocentesViewModel::class.java]
-        viewModel.EnviarPeticion(id_posgrado)
-
-        if (viewModel.docentes != null) {
-            viewModel.docentes?.observe(this, Observer {
-                it?.let {
-                    docentes = it
-                    llenarLista()
-                }
-
-            })
-        } else {
-            Toaster.toast(R.string.EstadoServidor)
+        id_posgrado?.let {
+            docentesViewModel.getDocentes(it)
         }
+    }
 
-        viewModel.estado.observe(this, Observer {
-            if (it) mostrarDialog() else ocultarDialog()
+    private fun observarResultados() {
+
+        docentesViewModel.docentesLiveData.observe(this, Observer {
+            llenarLista(it)
+            ocultarDialog()
+        })
+
+        docentesViewModel.errorLiveData.observe(this, Observer {
+            Toaster.toast(R.string.EstadoServidor)
+            Log.d("DocentesError:", it)
+            ocultarDialog()
         })
     }
 
-    private fun llenarLista() {
-        val lvDocentes = findViewById<View>(R.id.lvDocentes) as ListView
-
+    private fun llenarLista(docentes: List<Docentes>) {
         lvDocentes.adapter = AdapterDocente(applicationContext, docentes)
         lvDocentes.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val i = Intent(this@DocentesActivity, DetalleDocenteActivity::class.java)

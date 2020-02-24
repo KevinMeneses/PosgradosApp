@@ -10,12 +10,17 @@ class diApplication: Application() {
 
     override fun onCreate() {
         super.onCreate()
-        val moduleList = listOf(viewModelModule, useCaseModule, repositoryModule)
         startKoin{
             androidLogger()
             androidContext(this@diApplication)
             androidFileProperties()
-            modules(moduleList)
+            modules(
+                    listOf(
+                            retrofitModule,
+                            viewModelModule,
+                            useCaseModule,
+                            repositoryModule)
+            )
         }
     }
 }

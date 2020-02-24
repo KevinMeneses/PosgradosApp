@@ -1,48 +1,48 @@
 package co.edu.uniautonoma.posgradosapp.data.datasource.remote.retrofit
 
-import co.edu.uniautonoma.posgradosapp.data.datasource.models.*
-import io.reactivex.Flowable
+import co.edu.uniautonoma.posgradosapp.data.models.*
+import retrofit2.Response
 import retrofit2.http.*
 
 interface PeticionesApi {
     @GET("get_escuela_.php")
-    fun getEscuela(@Query("id") id: Int): Flowable<Escuela?>?
+    suspend fun getEscuela(@Query("id") id: Int): Response<EscuelaApi?>
 
     @GET("get_usuario_.php")
-    fun getUsuario(@Query("correo") correo: String?): Flowable<Usuarios?>?
+    suspend fun getUsuario(@Query("correo") correo: String?): Response<UsuarioApi?>
 
-    @get:GET("get_all_posgrados_.php")
-    val allPosgrados: Flowable<List<Posgrados?>?>?
+    @GET("get_all_posgrados_.php")
+    suspend fun getAllPosgrados(): Response<List<PosgradosApi>?>
 
     @GET("get_all_modulos_.php")
-    fun getAllModulos(@Query("id_posgrado") id_posgrado: String?): Flowable<List<Modulos?>?>?
+    suspend fun getAllModulos(@Query("id_posgrado") id_posgrado: String?): Response<List<ModulosApi>?>
 
     @GET("get_all_docentes_.php")
-    fun getAllDocentes(@Query("id_posgrado") id_posgrado: String?): Flowable<List<Docentes?>?>?
+    suspend fun getAllDocentes(@Query("id_posgrado") id_posgrado: String?): Response<List<DocentesApi>?>
 
     @GET("get_posgrado_.php")
-    fun getPosgrado(@Query("id_posgrado") id_posgrado: String?): Flowable<Posgrados?>?
+    suspend fun getPosgrado(@Query("id_posgrado") id_posgrado: String?): Response<PosgradosApi?>
 
     @GET("get_some_modulos_.php")
-    fun getSomeModulos(@Query("id_posgrado") id_posgrado: String?, @Query("semestre") semestre: Int): Flowable<List<Modulos?>?>?
+    suspend fun getSomeModulos(@Query("id_posgrado") id_posgrado: String?, @Query("semestre") semestre: Int): Response<List<ModulosApi>?>
 
     @GET("get_some_docentes_.php")
-    fun getSomeDocentes(@Query("id_posgrado") id_posgrado: String?, @Query("semestre") semestre: Int): Flowable<List<Docentes?>?>?
+    suspend fun getSomeDocentes(@Query("id_posgrado") id_posgrado: String?, @Query("semestre") semestre: Int): Response<List<DocentesApi>?>
 
     @GET("get_horario_.php")
-    fun getHorario(@Query("id_posgrado") id_posgrado: String?, @Query("semestre") semestre: Int): Flowable<List<Horarios?>?>?
+    suspend fun getHorario(@Query("id_posgrado") id_posgrado: String?, @Query("semestre") semestre: Int): Response<List<HorariosApi>?>
 
     @GET("get_some_calificaciones_.php")
-    fun getSomeCalificaciones(@Query("id_posgrado") id_posgrado: String?, @Query("semestre") semestre: Int, @Query("id_usuario") id_usuario: String?): Flowable<List<Calificaciones?>?>?
+    suspend fun getSomeCalificaciones(@Query("id_posgrado") id_posgrado: String?, @Query("semestre") semestre: Int, @Query("id_usuario") id_usuario: String?): Response<List<CalificacionesApi>?>
 
     @GET("get_some_calificacion_.php")
-    fun getSomeCalificacion(@Query("id_usuario") id_usuario: String?, @Query("id_docente") id_docente: String?): Flowable<Calificaciones?>?
+    suspend fun getSomeCalificacion(@Query("id_usuario") id_usuario: String?, @Query("id_docente") id_docente: String?): Response<CalificacionesApi?>
 
     @FormUrlEncoded
     @POST("update_calificacion.php")
-    fun updateCalificacion(@Field("calificacion") calificacion: Float, @Field("id_usuario") id_usuario: String?, @Field("id_docente") id_docente: String?): Flowable<Calificaciones?>?
+    suspend fun updateCalificacion(@Field("calificacion") calificacion: Float, @Field("id_usuario") id_usuario: String?, @Field("id_docente") id_docente: String?): Response<CalificacionesApi?>
 
     @FormUrlEncoded
     @POST("add_calificacion.php")
-    fun addCalificacion(@Field("calificacion") calificacion: Float, @Field("id_usuario") id_usuario: String?, @Field("id_docente") id_docente: String?): Flowable<Calificaciones?>?
+    suspend fun addCalificacion(@Field("calificacion") calificacion: Float, @Field("id_usuario") id_usuario: String?, @Field("id_docente") id_docente: String?): Response<CalificacionesApi?>
 }

@@ -14,13 +14,27 @@ class DetallePosgradoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detalle_posgrado)
 
-        tvNombreposgrado!!.text = intent.getStringExtra("nombre")
-        tvCod_snies!!.text = "Código snies: " + intent.getStringExtra("cod_snies")
-        tvTotalcreditos!!.text = "Total créditos: " + Integer.toString(intent.getIntExtra("totalcreditos", 0))
-        tvDuracion!!.text = "Duración: " + intent.getStringExtra("duracion")
-        tvValorsemestre!!.text = "Valor semestre: " + intent.getStringExtra("valorsemestre")
-        tvDescripcionposgrado!!.text = intent.getStringExtra("descripcion")
+        setDetalles()
+        onClick()
+    }
 
+    private fun setDetalles() {
+        val nombreposgrado = intent.getStringExtra("nombre")
+        val codsnies = "Código snies: " + intent.getStringExtra("cod_snies")
+        val totalcreditos = "Total créditos: " + Integer.toString(intent.getIntExtra("totalcreditos", 0))
+        val duracion = "Duración: " + intent.getStringExtra("duracion")
+        val valorsemestre = "Valor semestre: " + intent.getStringExtra("valorsemestre")
+        val descripcion = intent.getStringExtra("descripcion")
+
+        tvNombreposgrado.text = nombreposgrado
+        tvCod_snies.text = codsnies
+        tvTotalcreditos.text = totalcreditos
+        tvDuracion.text = duracion
+        tvValorsemestre.text = valorsemestre
+        tvDescripcionposgrado.text = descripcion
+    }
+
+    private fun onClick() {
         tvOpModulos!!.setOnClickListener {
             val i = Intent(this@DetallePosgradoActivity, ModulosActivity::class.java)
             i.putExtra("id_posgrado", intent.getStringExtra("id_posgrado"))

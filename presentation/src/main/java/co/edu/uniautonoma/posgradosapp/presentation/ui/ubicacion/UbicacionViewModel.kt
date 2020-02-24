@@ -1,4 +1,4 @@
-package co.edu.uniautonoma.posgradosapp.presentation.ui.escuela
+package co.edu.uniautonoma.posgradosapp.presentation.ui.ubicacion
 
 import androidx.lifecycle.*
 import co.edu.uniautonoma.posgradosapp.domain.entity.Escuela
@@ -6,7 +6,7 @@ import co.edu.uniautonoma.posgradosapp.domain.usecase.EscuelaUseCase
 import co.edu.uniautonoma.posgradosapp.domain.util.Result
 import kotlinx.coroutines.launch
 
-class EscuelaViewModel(private val escuelaUseCase: EscuelaUseCase) : ViewModel() {
+class UbicacionViewModel(private val escuelaUseCase: EscuelaUseCase) : ViewModel() {
 
     private val escuela = MediatorLiveData<Escuela>()
     private val error = MediatorLiveData<String>()
@@ -14,9 +14,10 @@ class EscuelaViewModel(private val escuelaUseCase: EscuelaUseCase) : ViewModel()
     val escuelaLiveData: LiveData<Escuela> get() = escuela
     val errorLiveData: LiveData<String> get() = error
 
-    fun getEscuela() {
+    private fun getUbicacion() {
         viewModelScope.launch {
-            when(val result = escuelaUseCase.getEscuela()){
+            val result = escuelaUseCase.getEscuela()
+            when(result){
                 is Result.Success -> escuela.postValue(result.data)
                 is Result.Error -> error.postValue(result.exception.message)
             }
@@ -24,6 +25,6 @@ class EscuelaViewModel(private val escuelaUseCase: EscuelaUseCase) : ViewModel()
     }
 
     init {
-        getEscuela()
+        getUbicacion()
     }
 }

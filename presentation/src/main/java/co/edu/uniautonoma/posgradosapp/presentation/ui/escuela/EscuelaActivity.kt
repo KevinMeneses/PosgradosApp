@@ -1,6 +1,7 @@
 package co.edu.uniautonoma.posgradosapp.presentation.ui.escuela
 
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.Observer
 import co.edu.uniautonoma.posgradosapp.presentation.R
 import co.edu.uniautonoma.posgradosapp.domain.entity.Escuela
@@ -16,23 +17,29 @@ class EscuelaActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_escuela)
-        ObtenerEscuela()
+
+        mostrarDialog()
+        observarResultados()
     }
 
-    private fun ObtenerEscuela() {
-        mostrarDialog()
-        if (escuelaViewModel.escuela != null) {
-            escuelaViewModel.escuela?.observe(this, Observer{
-                it?.let {
-                    tvDescripcionescuela.setText(it.getDescripcion())
-                    val director = "Director: " + it.getDirector()
-                    tvDirector!!.text = director
-                }
+    private fun observarResultados() {
+        escuelaViewModel.escuelaLiveData.observe(this, Observer{
+            setViews(it)
+            ocultarDialog()
+        })
 
-            })
-        } else {
+        escuelaViewModel.errorLiveData.observe(this, Observer {
+            ocultarDialog()
             Toaster.toast(R.string.EstadoServidor)
-        }
-        escuelaViewModel.estado.observe(this, Observer { estado: Boolean -> if (estado) mostrarDialog() else ocultarDialog() })
+            Log.d("EscuelaError:",  it)
+        })
+    }
+
+    private fun setViews(it: Escuela) {
+        val descripcion = it.descripcion
+        val director = "Director: ${it.director}"
+
+        tvDescripcionescuela.text = descripcion
+        tvDirector.text = director
     }
 }
