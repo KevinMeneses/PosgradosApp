@@ -1,5 +1,6 @@
 package co.edu.uniautonoma.posgradosapp.di
 
+import co.edu.uniautonoma.posgradosapp.data.datasource.remote.Interceptors.ServerInterceptor
 import co.edu.uniautonoma.posgradosapp.data.datasource.remote.retrofit.PeticionesApi
 import co.edu.uniautonoma.posgradosapp.data.repository.*
 import co.edu.uniautonoma.posgradosapp.domain.repository.*
@@ -12,22 +13,37 @@ import co.edu.uniautonoma.posgradosapp.presentation.ui.posgrados.PosgradosViewMo
 import co.edu.uniautonoma.posgradosapp.presentation.ui.pqrs.PqrsViewModel
 import co.edu.uniautonoma.posgradosapp.presentation.ui.principal.PrincipalViewModel
 import co.edu.uniautonoma.posgradosapp.presentation.ui.ubicacion.UbicacionViewModel
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
+
+val okHttpClientModule = module {
+
+    fun provideOkHttpClient(): OkHttpClient {
+        return OkHttpClient.Builder()
+                .connectTimeout(20, TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS)
+                .addInterceptor(ServerInterceptor())
+                .build()
+    }
+    single { provideOkHttpClient() }
+}
 
 val retrofitModule = module {
 
-    fun provideRetrofit(): PeticionesApi {
+    fun provideRetrofit(okHttpClient: OkHttpClient): PeticionesApi {
         return Retrofit.Builder()
                 .baseUrl("https://posgradosapp.uniautonoma.edu.co/")
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
                 .build()
                 .create(PeticionesApi::class.java)
     }
-    single { provideRetrofit() }
+    single { provideRetrofit(get()) }
 }
 
 val viewModelModule = module {

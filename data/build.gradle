@@ -43,8 +43,8 @@ dependencies {
     // GSON body parser
     implementation 'com.google.code.gson:gson:2.8.5'
 
-    // Okhttp dependencies
-    implementation "com.squareup.okhttp3:okhttp:4.4.0"
+    //OkHttp3
+    implementation "com.squareup.okhttp3:okhttp:4.2.0"
 
     //koin dependencies
     implementation "org.koin:koin-android:$koin_version"

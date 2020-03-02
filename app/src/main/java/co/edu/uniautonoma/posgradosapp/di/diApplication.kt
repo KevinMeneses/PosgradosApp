@@ -16,6 +16,7 @@ class diApplication: Application() {
             androidFileProperties()
             modules(
                     listOf(
+                            okHttpClientModule,
                             retrofitModule,
                             viewModelModule,
                             useCaseModule,
