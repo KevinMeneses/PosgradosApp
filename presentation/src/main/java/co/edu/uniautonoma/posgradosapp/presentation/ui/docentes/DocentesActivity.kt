@@ -3,9 +3,7 @@ package co.edu.uniautonoma.posgradosapp.presentation.ui.docentes
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.AdapterView
-import android.widget.ListView
 import androidx.lifecycle.Observer
 import co.edu.uniautonoma.posgradosapp.presentation.R
 import co.edu.uniautonoma.posgradosapp.presentation.adapter.AdapterDocente
@@ -14,7 +12,6 @@ import co.edu.uniautonoma.posgradosapp.presentation.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_docentes.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import xdroid.toaster.Toaster
-import java.util.*
 
 class DocentesActivity : BaseActivity() {
 

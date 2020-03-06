@@ -11,51 +11,36 @@ import co.edu.uniautonoma.posgradosapp.presentation.R
 import co.edu.uniautonoma.posgradosapp.presentation.adapter.AdapterPrincipal.ModulosViewHolder
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.cardview_principal.view.*
+import kotlinx.android.synthetic.main.lista_docentes.view.*
 
 class AdapterPrincipal : RecyclerView.Adapter<ModulosViewHolder>() {
 
     private var informacion: Informacion? = null
+    private var count: Int = 0
+    var onItemClick: ((Int, Int) -> Unit)? = null
 
     fun setInformacion(info: Informacion?){
         informacion = info
+        count = info?.modulos?.size!!
     }
 
-    private var clickListener: ClickListener? = null
-
-    fun setClickListener(clickListener: ClickListener?) {
-        this.clickListener = clickListener
-    }
-
-    interface ClickListener {
-        fun onItemClicked(position: Int, tag: String?)
-    }
-
-    inner class ModulosViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-
-        override fun onClick(v: View) {
-            if (clickListener != null) {
-                clickListener!!.onItemClicked(position, v.tag.toString())
-            }
-        }
+    inner class ModulosViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener{
 
         init {
             itemView.run {
-                tvNombreDocente.tag = "Docentes"
-                rlFotoDocente.tag = "Docentes"
-                ivDetalleDocente.tag = "Docentes"
                 tvNombreDocente.setOnClickListener(this@ModulosViewHolder)
-                rlFotoDocente.setOnClickListener(this@ModulosViewHolder)
+                ivFotoDocente.setOnClickListener(this@ModulosViewHolder)
                 ivDetalleDocente.setOnClickListener(this@ModulosViewHolder)
-                tvNombreModulo.tag = "Modulos"
-                ivContenido.tag = "Modulos"
                 tvNombreModulo.setOnClickListener(this@ModulosViewHolder)
+                tvDuracionModulo.setOnClickListener(this@ModulosViewHolder)
                 ivContenido.setOnClickListener(this@ModulosViewHolder)
-                ivHorario.tag = "Horarios"
-                ivAlerta.tag = "Alerta"
                 ivHorario.setOnClickListener(this@ModulosViewHolder)
                 ivAlerta.setOnClickListener(this@ModulosViewHolder)
             }
+        }
 
+        override fun onClick(it: View?) {
+            onItemClick?.invoke(adapterPosition, it!!.id)
         }
     }
 
@@ -72,26 +57,26 @@ class AdapterPrincipal : RecyclerView.Adapter<ModulosViewHolder>() {
             val nombredocente = "${docente.nombre} ${docente.apellido}"
             val promedio = calificacion.promedio.toString()
 
-            modulosViewHolder.itemView.tvNombreModulo.text = modulo.nombre
-            modulosViewHolder.itemView.tvDuracionModulo.text = modulo.duracion
-            modulosViewHolder.itemView.tvNombreDocente.text = nombredocente
-            modulosViewHolder.itemView.tvCalificacion.text = promedio
-            modulosViewHolder.itemView.rbCalificacion.rating = calificacion.calificacion
-            //modulosViewHolder.itemView.rbCalificacion.onRatingBarChangeListener = RatingBar.OnRatingBarChangeListener { ratingBar, rating, fromUser -> SetCalificacion(position, rating) }
-            Glide.with(modulosViewHolder.itemView.ivFotoDocente.context).load(docente.imagen).into(modulosViewHolder.itemView.ivFotoDocente)
+            modulosViewHolder.itemView.run {
+                tvNombreModulo.text = modulo.nombre
+                tvDuracionModulo.text = modulo.duracion
+                tvNombreDocente.text = nombredocente
+                tvCalificacion.text = promedio
+                rbCalificacion.rating = calificacion.calificacion
+                //rbCalificacion.onRatingBarChangeListener = RatingBar.OnRatingBarChangeListener { ratingBar, rating, fromUser -> SetCalificacion(position, rating) }
+                Glide.with(ivFotoDocente.context).load(docente.imagen).into(ivFotoDocente)
+            }
         }
     }
 
     override fun getItemCount(): Int {
-        return informacion?.modulos!!.size.let {
-            it
-        }
+        return count
     }
 
     fun clear() {
-        informacion?.modulos!!.size.let {
+        if(count > 0) {
             informacion = null
-            notifyItemRangeRemoved(0, it)
+            notifyItemRangeRemoved(0, count)
         }
     }
 

@@ -13,7 +13,6 @@ import co.edu.uniautonoma.posgradosapp.presentation.ui.posgrados.PosgradosViewMo
 import co.edu.uniautonoma.posgradosapp.presentation.ui.pqrs.PqrsViewModel
 import co.edu.uniautonoma.posgradosapp.presentation.ui.principal.PrincipalViewModel
 import co.edu.uniautonoma.posgradosapp.presentation.ui.ubicacion.UbicacionViewModel
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -21,16 +20,24 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
+val interceptorModule = module {
+    fun provideInterceptor(): ServerInterceptor{
+        return ServerInterceptor()
+    }
+    single { provideInterceptor() }
+}
+
 val okHttpClientModule = module {
 
-    fun provideOkHttpClient(): OkHttpClient {
+    fun provideOkHttpClient(interceptor: ServerInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
-                .connectTimeout(20, TimeUnit.SECONDS)
-                .readTimeout(20, TimeUnit.SECONDS)
-                .addInterceptor(ServerInterceptor())
+                .connectTimeout(5, TimeUnit.SECONDS)
+                .writeTimeout(5, TimeUnit.SECONDS)
+                .readTimeout(5, TimeUnit.SECONDS)
+                .addInterceptor(interceptor)
                 .build()
     }
-    single { provideOkHttpClient() }
+    single { provideOkHttpClient(get()) }
 }
 
 val retrofitModule = module {

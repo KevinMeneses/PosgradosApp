@@ -43,7 +43,11 @@ class PosgradosActivity : BaseActivity() {
 
     private fun llenarPosgrados(posgrados: List<Posgrados>) {
         val listaposgrados = ArrayList<String>()
-        posgrados.map { listaposgrados.add(it.nombre) }
+        posgrados.map {
+            it.nombre?.let {
+                listaposgrados.add(it)
+            }
+        }
         lvPosgrados.adapter = ArrayAdapter(this, R.layout.lista_posgrado, R.id.tvlistaposgrado, listaposgrados)
     }
 

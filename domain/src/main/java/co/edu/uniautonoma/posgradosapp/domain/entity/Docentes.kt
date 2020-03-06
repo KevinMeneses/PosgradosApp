@@ -6,6 +6,4 @@ data class Docentes(
         val profesion: String,
         var descripcion: String,
         val imagen: String
-) {
-    var id: String? = null
-}
+)

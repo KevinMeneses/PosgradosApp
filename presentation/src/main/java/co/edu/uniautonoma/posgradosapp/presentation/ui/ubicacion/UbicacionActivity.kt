@@ -26,7 +26,7 @@ class UbicacionActivity : BaseActivity(), OnMapReadyCallback {
 
     private val ubicacionViewModel: UbicacionViewModel by viewModel()
     private var mMap: GoogleMap? = null
-    private val coordenadas = arrayOf(2.442971, -76.605247)
+    private val coordenadas = mutableListOf(2.442971, -76.605247)
     private var direccion: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,6 +95,6 @@ class UbicacionActivity : BaseActivity(), OnMapReadyCallback {
                 .snippet(direccion)
         ).showInfoWindow()
         mMap!!.moveCamera(CameraUpdateFactory.newLatLng(escuela))
-        mMap!!.animateCamera(CameraUpdateFactory.zoomTo(17f))
+        mMap!!.animateCamera(CameraUpdateFactory.zoomTo(12f))
     }
 }

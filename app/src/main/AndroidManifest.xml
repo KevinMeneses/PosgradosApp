@@ -18,7 +18,7 @@
 
     <application
         android:name=".di.diApplication"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -61,7 +61,8 @@
         <activity android:name=".presentation.ui.posgrados.DetallePosgradoActivity"
             android:screenOrientation="portrait"/>
 
-        <receiver android:name=".presentation.helper.AlarmReceiver">
+        <receiver android:name=".presentation.helper.AlarmReceiver"
+            android:permission="not">
             <intent-filter>
                 <action android:name="ALARMA" />
             </intent-filter>

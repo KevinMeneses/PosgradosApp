@@ -45,7 +45,6 @@ class PrincipalActivity : BaseActivity() {
         setSemestre()
         enviarPeticion()
         observarResultado()
-        modulosClickListener()
     }
 
     private fun semestreClickListener() {
@@ -103,20 +102,20 @@ class PrincipalActivity : BaseActivity() {
     }
 
     private fun modulosClickListener() {
-        adapterPrincipal?.setClickListener(object : AdapterPrincipal.ClickListener {
-            override fun onItemClicked(position: Int, tag: String?) {
-                when (tag) {
-                    "Docentes" -> verDocente(position)
-                    "Modulos" -> verModulo(position)
-                    "Horarios" ->
-                        if (!informacion?.horario?.isEmpty()!!) verHorario()
-                        else Toaster.toast(R.string.msg_horario_err)
-                    "Alerta" ->
-                        if (!informacion?.horario?.isEmpty()!!) setAlarma()
-                        else Toaster.toast(R.string.msg_horario_err)
+        adapterPrincipal?.onItemClick = { position: Int, id: Int ->
+            when(id){
+                R.id.tvNombreDocente, R.id.ivDetalleDocente, R.id.ivFotoDocente -> verDocente(position)
+                R.id.tvNombreModulo, R.id.tvDuracionModulo, R.id.ivContenido -> verModulo(position)
+                R.id.ivHorario -> {
+                    if (!informacion?.horario?.isEmpty()!!) verHorario()
+                    else Toaster.toast(R.string.msg_horario_err)
+                }
+                R.id.ivAlerta -> {
+                    if (!informacion?.horario?.isEmpty()!!) setAlarma()
+                    else Toaster.toast(R.string.msg_horario_err)
                 }
             }
-        })
+        }
     }
 
     private fun llenarLista() {
@@ -124,6 +123,7 @@ class PrincipalActivity : BaseActivity() {
         adapterPrincipal?.setInformacion(informacion)
         rvModulos.layoutManager = LinearLayoutManager(this)
         rvModulos.adapter = adapterPrincipal
+        modulosClickListener()
     }
 
     private fun cargarSemestre(semestre: Int) {
@@ -180,10 +180,10 @@ class PrincipalActivity : BaseActivity() {
             val dia2: String = horario[1].dia + " " + horario[1].hora_inicio.substring(0, 5) + " - " + horario[1].hora_fin.substring(0, 5)
             val salon = "Salon " + horario[0].salon
 
-            tvDiahora1.text = dia1
-            tvDiahora2.text = dia2
-            tvSede.setText(horario[0].sede)
-            tvSalon.text = salon
+            tvDiahora1?.text = dia1
+            tvDiahora2?.text = dia2
+            tvSede?.setText(horario[0].sede)
+            tvSalon?.text = salon
         }
     }
 
